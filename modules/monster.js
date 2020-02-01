@@ -65,6 +65,8 @@ class Monsters {
             const randomX = self.getRandomX(monster.direction);
             const randomY = self.getRandomY();
 
+            if (randomY < 0) return;
+
             switch (monster.type) {
                 case MonsterTypes.HARPEE():
                     self.initHarpee(randomX, randomY);
@@ -98,7 +100,28 @@ class Monsters {
 
     getRandomY () {
         const row = Math.floor(Math.random() * Math.floor(3));
-        const randomY = row < 2 ? (row < 1 ?  250 :  410) : 560;
+        let randomY = -1;
+
+        switch (row) {
+            case 0: {
+                const min = 300, max = 375;
+                randomY = Math.floor(Math.random() * (max - min)) + min;
+                break;
+            }
+            case 1: {
+                const min = 450, max = 515;
+                randomY = Math.floor(Math.random() * (max - min)) + min;
+                break;
+            }
+            case 2: {
+                const min = 580, max = 610;
+                randomY = Math.floor(Math.random() * (max - min)) + min;
+                break;
+            }
+            default:
+                break;
+        }
+        
         return randomY;
     }
 
@@ -110,7 +133,7 @@ class Monsters {
         this.__phaser.anims.create({
             key: 'harpee_left',
             frames: this.__phaser.anims.generateFrameNumbers('harpee', { start: 0, end: 15  }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         });
 
@@ -140,7 +163,7 @@ class Monsters {
         this.__phaser.anims.create({
             key: 'pinkman_right',
             frames: this.__phaser.anims.generateFrameNumbers('pinkman', { start: 0, end: 12  }),
-            frameRate: 10,
+            frameRate: 30,
             repeat: -1
         });
 
@@ -154,8 +177,8 @@ class Monsters {
 
         this.__phaser.anims.create({
             key: 'green_peas_right',
-            frames: this.__phaser.anims.generateFrameNumbers('green_peas', { start: 0, end: 14  }),
-            frameRate: 10,
+            frames: this.__phaser.anims.generateFrameNumbers('green_peas', { start: 1, end: 13  }),
+            frameRate: 5,
             repeat: -1
         });
 
@@ -170,7 +193,7 @@ class Monsters {
 
     moveHarpeeLeft () {
         for (const [index, harpee] of this.__harpees.entries()) {
-            harpee.setVelocityX(-350);
+            harpee.setVelocityX(-450);
             harpee.anims.play('harpee_left', true);
 
             this.checkCollisionLeft(this.__harpees, index, harpee);
@@ -188,7 +211,7 @@ class Monsters {
 
     movePinkmanRight () {
         for (const [index, pinkman] of this.__pinkmans.entries()) {
-            pinkman.setVelocityX(170);
+            pinkman.setVelocityX(120);
             pinkman.anims.play('pinkman_right', true);
 
             this.checkCollisionLeft(this.__pinkmans, index, pinkman);
@@ -197,7 +220,7 @@ class Monsters {
 
     moveGreenPeasesRight () {
         for (const [index, greenPease] of this.__greenPeases.entries()) {
-            greenPease.setVelocityX(50);
+            greenPease.setVelocityX(80);
             greenPease.anims.play('green_peas_right', true);
 
             this.checkCollisionLeft(this.__greenPeases, index, greenPease);
