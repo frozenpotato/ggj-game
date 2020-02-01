@@ -8,8 +8,12 @@ var config = {
         update
     },
     physics: {
-        default: 'impact',
+        default: 'arcade',
         impact: {
+            gravity: 0,
+            debug: false
+        },
+        arcade: {
             gravity: 0,
             debug: false
         }
@@ -41,8 +45,7 @@ function preload() {
 function create() {
     this.add.image(600, 450, 'bg');
     // this.add.sprite(1200 + 130, 270, 'player_down'); base position
-    this.impact.world.setBounds();
-
+    // this.impact.world.setBounds();
 
     //animations
     this.anims.create({
@@ -101,19 +104,26 @@ function create() {
         repeat: -1
     });
 
-    player = this.impact.add.sprite(200, 200, 'bird', 4).setOrigin(0, 0.15);
-    player.setActiveCollision();
+    player = this.physics.add.sprite(200, 200, 'bird', 4).setOrigin(0, 0.15);
+    player.setCollideWorldBounds(true);
     player.setMaxVelocity(150); //150 if with no item. 50 with item.
     player.setFriction(2000, 100);
     player.body.accelGround = 100;
 
     cursors = this.input.keyboard.createCursorKeys();
+    // this.physics.add.sprite(400, 300, 'box')
 
-    __monsters.initMonsters();
+    __monsters.initialize();
 }
 
 function update(time, delta) {
     var accel = player.body.accelGround;
+
+    __monsters.moveHarpeeLeft();
+    __monsters.moveMushroomLeft();
+
+    __monsters.movePinkmanRight();
+    __monsters.moveGreenPeasesRight();
 
     if (cursors.up.isDown && cursors.right.isDown) {
         player.setAccelerationX(accel);
@@ -154,5 +164,5 @@ function update(time, delta) {
     else {
         player.setAccelerationX(0);
         player.setAccelerationY(0);
-    }
+    }   
 }
