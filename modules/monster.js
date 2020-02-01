@@ -1,7 +1,7 @@
 class Monsters {
     constructor(phaserObj) {
         this.__phaser = phaserObj;
-        this.__phaser.load.image('dude', '../assets/dude.png')
+        this.__phaser.load.image('dude', './assets/dude.png')
     }
     
     initMonsters () {

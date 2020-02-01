@@ -20,6 +20,7 @@ var game = new Phaser.Game(config);
 let player;
 let cursors;
 let __monsters;
+let __parts;
 
 //load assets here
 function preload() {
@@ -35,6 +36,7 @@ function preload() {
     this.load.image('bg', 'assets/bg.png');
 
     __monsters = new Monsters(this);
+    __parts = new Parts(this);
 }
 
 //sequence of added images is important. they overlap.
@@ -110,6 +112,7 @@ function create() {
     cursors = this.input.keyboard.createCursorKeys();
 
     __monsters.initMonsters();
+    __parts.initParts();
 }
 
 function update(time, delta) {
