@@ -25,6 +25,7 @@ let player;
 let cursors;
 let __monsters;
 let __parts;
+let __meteors;
 
 //load assets here
 function preload() {
@@ -41,6 +42,7 @@ function preload() {
 
     __monsters = new Monsters(this);
     __parts = new Parts(this);
+    __meteors = new Meteors(this);
 }
 
 //sequence of added images is important. they overlap.
@@ -117,6 +119,7 @@ function create() {
 
     __monsters.initialize();
     __parts.initParts();
+    __meteors.initialize();
 }
 
 function update(time, delta) {
@@ -127,6 +130,8 @@ function update(time, delta) {
 
     __monsters.movePinkmanRight();
     __monsters.moveGreenPeasesRight();
+
+    __meteors.checkMeteorPosition();
 
     if (cursors.up.isDown && cursors.right.isDown) {
         player.setAccelerationX(accel);

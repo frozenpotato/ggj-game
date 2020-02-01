@@ -191,6 +191,12 @@ class Monsters {
         }
     }
 
+    checkCollisionRight(array, index, monster) {
+        if (monster.body.x > (1200 + monster.body.width)) {
+            array.splice(index, 1);
+        }
+    }
+
     moveHarpeeLeft () {
         for (const [index, harpee] of this.__harpees.entries()) {
             harpee.setVelocityX(-450);
@@ -214,7 +220,7 @@ class Monsters {
             pinkman.setVelocityX(120);
             pinkman.anims.play('pinkman_right', true);
 
-            this.checkCollisionLeft(this.__pinkmans, index, pinkman);
+            this.checkCollisionRight(this.__pinkmans, index, pinkman);
         }
     }
 
@@ -223,7 +229,7 @@ class Monsters {
             greenPease.setVelocityX(80);
             greenPease.anims.play('green_peas_right', true);
 
-            this.checkCollisionLeft(this.__greenPeases, index, greenPease);
+            this.checkCollisionRight(this.__greenPeases, index, greenPease);
         }
     }
 }
