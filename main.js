@@ -24,6 +24,7 @@ var game = new Phaser.Game(config);
 let player;
 let cursors;
 let __monsters;
+let __parts;
 
 //load assets here
 function preload() {
@@ -39,6 +40,7 @@ function preload() {
     this.load.image('bg', 'assets/bg.png');
 
     __monsters = new Monsters(this);
+    __parts = new Parts(this);
 }
 
 //sequence of added images is important. they overlap.
@@ -114,6 +116,7 @@ function create() {
     // this.physics.add.sprite(400, 300, 'box')
 
     __monsters.initialize();
+    __parts.initParts();
 }
 
 function update(time, delta) {
