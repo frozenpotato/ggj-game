@@ -3,7 +3,7 @@ class Meteors {
 
     constructor(phaser) {
         this.__phaser = phaser;
-        this.__phaser.load.spritesheet('meteor', '../assets/meteor.png', { frameWidth: 90, frameHeight: 90 });
+        this.__phaser.load.spritesheet('meteor', './assets/meteor.png', { frameWidth: 90, frameHeight: 90 });
     }
 
     initialize () {

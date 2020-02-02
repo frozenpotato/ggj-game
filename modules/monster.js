@@ -12,11 +12,11 @@ class Monsters {
 
         this.__timer = 0;
 
-        this.__phaser.load.spritesheet('harpee', '../assets/monster.png', { frameWidth: 130, frameHeight: 147 });
-        this.__phaser.load.spritesheet('pinkman', '../assets/pinkman.png', { frameWidth: 110, frameHeight: 110 });
-        this.__phaser.load.spritesheet('mushroom', '../assets/mushroom.png', { frameWidth: 115, frameHeight: 122 });
-        this.__phaser.load.spritesheet('green_peas', '../assets/green_peas.png', { frameWidth: 64, frameHeight: 144 });
-        this.__phaser.load.spritesheet('harpee_right', '../assets/harpee_right.png', { frameWidth: 130, frameHeight: 147 });
+        this.__phaser.load.spritesheet('harpee', './assets/monster.png', { frameWidth: 130, frameHeight: 147 });
+        this.__phaser.load.spritesheet('pinkman', './assets/pinkman.png', { frameWidth: 110, frameHeight: 110 });
+        this.__phaser.load.spritesheet('mushroom', './assets/mushroom.png', { frameWidth: 115, frameHeight: 122 });
+        this.__phaser.load.spritesheet('green_peas', './assets/green_peas.png', { frameWidth: 64, frameHeight: 144 });
+        this.__phaser.load.spritesheet('harpee_right', './assets/harpee_right.png', { frameWidth: 130, frameHeight: 147 });
     }
 
     initialize () {

@@ -1,54 +1,35 @@
-var config = {
-    type: Phaser.AUTO,
-    width: 1200,
-    height: 900,
-    scene: {
-        preload,
-        create,
-        update
-    },
-    physics: {
-        default: 'arcade',
-        impact: {
-            gravity: 0,
-            debug: false
-        },
-        arcade: {
-            gravity: 0,
-            debug: false
-        }
-    },
-};
+// Modules to control application life and create native browser window
+const {app, BrowserWindow} = require('electron')
+const path = require('path')
 
-var game = new Phaser.Game(config);
-let player;
-let cursors;
-let __monsters;
-let __parts;
-let __meteors;
+let mainWindow
 
-//load assets here
-function preload() {
-    this.load.image('bg', 'assets/bg.png');
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    width: 1217,
+    height: 943,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
+  })
 
-    __monsters = new Monsters(game, this);
-    __parts = new Parts(this);
-    __meteors = new Meteors(this);
-    player = new Player(this);
+  // and load the index.html of the app.
+  mainWindow.loadFile('index.html')
+  mainWindow.setMenuBarVisibility(false)
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
 }
 
-function create() {
-    this.add.image(600, 450, 'bg');
-    player.initialize();
-    __monsters.initialize();
-    __parts.initParts();
-    __meteors.initialize();
-}
+app.on('ready', createWindow)
 
-function update(time, delta) {
-    player.movePlayer();
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit()
+})
 
-    __monsters.updateMonsters(time);
-    __meteors.checkMeteorPosition();
+app.on('activate', function () {
+  if (mainWindow === null) createWindow()
+})
 
-}

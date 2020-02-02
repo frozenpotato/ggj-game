@@ -3,15 +3,15 @@ const SPRITE_ATTRIBS = { frameWidth: 94, frameHeight: 94 }
 class Player {
     constructor(phaserObj) {
         this.phaser = phaserObj;
-        this.phaser.load.spritesheet('player_stand_down', '../assets/player_stand_down.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_down', '../assets/player_down.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_up', '../assets/player_up.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_left', '../assets/player_left.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_right', '../assets/player_right.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_q1', '../assets/player_q1.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_q2', '../assets/player_q2.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_q3', '../assets/player_q3.png', SPRITE_ATTRIBS);
-        this.phaser.load.spritesheet('player_q4', '../assets/player_q4.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_stand_down', './assets/player_stand_down.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_down', './assets/player_down.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_up', './assets/player_up.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_left', './assets/player_left.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_right', './assets/player_right.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_q1', './assets/player_q1.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_q2', './assets/player_q2.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_q3', './assets/player_q3.png', SPRITE_ATTRIBS);
+        this.phaser.load.spritesheet('player_q4', './assets/player_q4.png', SPRITE_ATTRIBS);
         this.cursors = this.phaser.input.keyboard.createCursorKeys();
         this.lastDirection = null;
     }
