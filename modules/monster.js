@@ -71,8 +71,6 @@ class Monsters {
 
         if (randomY < 0) return;
 
-        console.log('GO GO GO', monster.name, '!!!!');
-
         switch (monster.name) {
             case MonsterTypes.HARPEE().name:
                 self.initHarpee(randomX, randomY);
@@ -238,10 +236,6 @@ class Monsters {
         this.movePinkmanRight();
         this.moveGreenPeasesRight();
         this.moveHarpeeRight();
-    }
-
-    testFunction () {
-        console.log('testFunction');
     }
 
     moveHarpeeLeft () {
