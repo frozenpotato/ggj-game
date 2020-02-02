@@ -24,6 +24,7 @@ var game = new Phaser.Game(config);
 let player;
 let cursors;
 let __spaceship;
+let __bgmusic;
 let __monsters;
 let __parts;
 let __meteors;
@@ -32,6 +33,7 @@ let __meteors;
 function preload() {
     this.load.image('bg', 'assets/bg.png');
     this.load.image('spaceship', 'assets/spaceship.png');
+    this.load.audio('bgmusic', ['assets/BgMusicFx_GamePlay.ogg', 'assets/audio/BgMusicFx_GamePlay.mp3']);
 
     __monsters = new Monsters(game, this);
     __parts = new Parts(this);
@@ -45,9 +47,21 @@ function create() {
     this.__spaceship = this.physics.add.sprite(600, 115, 'spaceship', 4);
     this.__spaceship.setCollideWorldBounds(true);
 
+    var config = {
+        mute: false,
+        delay: 0,
+        seek: 0,
+        rate: 1,
+        volume: 1,
+        loop: true
+    };
+
+    this.__bgmusic = this.sound.add('bgmusic');
+    this.__bgmusic.play(config);
+
+    __parts.initParts();
     player.initialize();
     __monsters.initialize();
-    __parts.initParts();
     __meteors.initialize();
 }
 
