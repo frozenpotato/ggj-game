@@ -23,6 +23,7 @@ var config = {
 var game = new Phaser.Game(config);
 let player;
 let cursors;
+let __spaceship;
 let __monsters;
 let __parts;
 let __meteors;
@@ -30,6 +31,7 @@ let __meteors;
 //load assets here
 function preload() {
     this.load.image('bg', 'assets/bg.png');
+    this.load.image('spaceship', 'assets/spaceship.png');
 
     __monsters = new Monsters(game, this);
     __parts = new Parts(this);
@@ -39,6 +41,10 @@ function preload() {
 
 function create() {
     this.add.image(600, 450, 'bg');
+    // this.add.image(600, 115, 'spaceship');
+    this.__spaceship = this.physics.add.sprite(600, 115, 'spaceship', 4);
+    this.__spaceship.setCollideWorldBounds(true);
+
     player.initialize();
     __monsters.initialize();
     __parts.initParts();
