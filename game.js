@@ -33,7 +33,7 @@ let __meteors;
 function preload() {
     this.load.image('bg', 'assets/bg.png');
     this.load.image('spaceship', 'assets/spaceship.png');
-    this.load.audio('bgmusic', ['assets/BgMusicFx_GamePlay.ogg', 'assets/audio/BgMusicFx_GamePlay.mp3']);
+    this.load.audio('bgmusic', ['assets/BgMusicFx_GamePlay.ogg', 'assets/BgMusicFx_GamePlay.mp3']);
 
     __monsters = new Monsters(game, this);
     __parts = new Parts(this);
