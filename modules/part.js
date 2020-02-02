@@ -37,7 +37,7 @@ class Parts {
             let x = (itemsLocationX.pop() * 100) + 75; // this.getRandomIntInclusive(50, 1090);
             let y = (this.getRandomIntInclusive(1, 2) * 100) + 625; // this.getRandomIntInclusive(690, 850);
 
-            this.__phaser.add.image(x, y, partItem);
+            this.__phaser.physics.add.image(x, y, partItem);
         }
     }
 
