@@ -137,7 +137,6 @@ class Player {
         else {
             this.player.setVelocityX(0);
             this.player.setVelocityY(0);
-            this.player.loadTexture(`player_stand_${this.lastDirection}`);
         }
     }
 }
