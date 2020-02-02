@@ -31,7 +31,7 @@ let __meteors;
 function preload() {
     this.load.image('bg', 'assets/bg.png');
 
-    __monsters = new Monsters(this);
+    __monsters = new Monsters(game, this);
     __parts = new Parts(this);
     __meteors = new Meteors(this);
     player = new Player(this);
@@ -47,12 +47,8 @@ function create() {
 
 function update(time, delta) {
     player.movePlayer();
-    __monsters.moveHarpeeLeft();
-    __monsters.moveMushroomLeft();
 
-    __monsters.movePinkmanRight();
-    __monsters.moveGreenPeasesRight();
-
+    __monsters.updateMonsters(time);
     __meteors.checkMeteorPosition();
 
 }

@@ -1,15 +1,22 @@
 class Monsters {
-    __harpees = [];
-    __mushrooms = [];
-    __pinkmans = [];
-    __greenPeases = [];
+    
+    constructor(game, phaser) {
+        this.__game = game;
+        this.__phaser = phaser;
 
-    constructor(phaserObj) {
-        this.__phaser = phaserObj;
+        this.__harpees = [];
+        this.__mushrooms = [];
+        this.__pinkmans = [];
+        this.__greenPeases = [];
+        this.__harpeesRight =  [];
+
+        this.__timer = 0;
+
         this.__phaser.load.spritesheet('harpee', '../assets/monster.png', { frameWidth: 130, frameHeight: 147 });
         this.__phaser.load.spritesheet('pinkman', '../assets/pinkman.png', { frameWidth: 110, frameHeight: 110 });
         this.__phaser.load.spritesheet('mushroom', '../assets/mushroom.png', { frameWidth: 115, frameHeight: 122 });
         this.__phaser.load.spritesheet('green_peas', '../assets/green_peas.png', { frameWidth: 64, frameHeight: 144 });
+        this.__phaser.load.spritesheet('harpee_right', '../assets/harpee_right.png', { frameWidth: 130, frameHeight: 147 });
     }
 
     initialize () {
@@ -50,46 +57,47 @@ class Monsters {
         this.initPinkman(-350, 560);
         this.initPinkman(-550, 300);
         this.initPinkman(-150, 410);
-
-        this.generateMonsters();
     }
 
     generateMonsters () {
         const self = this;
-        
-        setInterval(() => {
-            const monsterTypeMax = MonsterTypes.MONSTER_TYPES().length;
-            const monsterType = Math.floor(Math.random() * Math.floor(monsterTypeMax));
 
-            const monster = MonsterTypes.MONSTER_TYPES()[monsterType];
-            const randomX = self.getRandomX(monster.direction);
-            const randomY = self.getRandomY();
+        const monsterTypeMax = MonsterTypes.MONSTER_TYPES().length;
+        const monsterType = Math.floor(Math.random() * Math.floor(monsterTypeMax));
 
-            if (randomY < 0) return;
+        const monster = MonsterTypes.MONSTER_TYPES()[monsterType];
+        const randomX = self.getRandomX(monster.direction);
+        const randomY = self.getRandomY();
 
-            switch (monster.type) {
-                case MonsterTypes.HARPEE():
-                    self.initHarpee(randomX, randomY);
-                    break;
-                case MonsterTypes.MUSHROOM():
-                    self.initMushroom(randomX, randomY);
-                    break;
-                case MonsterTypes.PINKMAN():
-                    self.initPinkman(randomX, randomY);
-                    break;
-                case MonsterTypes.GREEN_PEAS():
-                    self.initGreenPeas(randomX, randomY);
-                    break;
-                default:
-                    return;
-            }
-        }, 500);
+        if (randomY < 0) return;
+
+        console.log('GO GO GO', monster.name, '!!!!');
+
+        switch (monster.name) {
+            case MonsterTypes.HARPEE().name:
+                self.initHarpee(randomX, randomY);
+                break;
+            case MonsterTypes.MUSHROOM().name:
+                self.initMushroom(randomX, randomY);
+                break;
+            case MonsterTypes.PINKMAN().name:
+                self.initPinkman(randomX, randomY);
+                break;
+            case MonsterTypes.GREEN_PEAS().name:
+                self.initGreenPeas(randomX, randomY);
+                break;
+            case MonsterTypes.HARPEE_RIGHT().name:
+                self.initHarpeeRight(randomX, randomY);
+                break;
+            default:
+                return;
+        }
     }
 
     getRandomX (direction) {
         if (direction === MonsterTypes.DIRECTION_LEFT()) {
             const min = 1400;
-            const max = 5000
+            const max = 2500
             return Math.floor(Math.random() * (max - min)) + min;
         } else {
             const min = 0;
@@ -128,6 +136,7 @@ class Monsters {
     initHarpee (x, y) {
         let harpee = this.__phaser.physics.add.sprite(x, y, 'harpee');
         harpee.setCollideWorldBounds(false);
+        harpee.setVelocityX(MonsterTypes.HARPEE().velocity);
         harpee.body.setGravity(0);
 
         this.__phaser.anims.create({
@@ -143,6 +152,7 @@ class Monsters {
     initMushroom (x, y) {
         let mushroom = this.__phaser.physics.add.sprite(x, y, 'mushroom');
         mushroom.setCollideWorldBounds(false);
+        mushroom.setVelocityX(MonsterTypes.MUSHROOM().velocity);
         mushroom.body.setGravity(0);
 
         this.__phaser.anims.create({
@@ -158,6 +168,7 @@ class Monsters {
     initPinkman (x, y) {
         let pinkman = this.__phaser.physics.add.sprite(x, y, 'pinkman');
         pinkman.setCollideWorldBounds(false);
+        pinkman.setVelocityX(MonsterTypes.PINKMAN().velocity);
         pinkman.body.setGravity(0);
 
         this.__phaser.anims.create({
@@ -173,6 +184,7 @@ class Monsters {
     initGreenPeas (x, y) {
         let greenPeas = this.__phaser.physics.add.sprite(x, y, 'pinkman');
         greenPeas.setCollideWorldBounds(false);
+        greenPeas.setVelocityX(MonsterTypes.GREEN_PEAS().velocity);
         greenPeas.body.setGravity(0);
 
         this.__phaser.anims.create({
@@ -183,6 +195,22 @@ class Monsters {
         });
 
         this.__greenPeases.push(greenPeas);
+    }
+
+    initHarpeeRight (x, y) {
+        let harpee = this.__phaser.physics.add.sprite(x, y, 'harpee_right');
+        harpee.setCollideWorldBounds(false);
+        harpee.setVelocityX(MonsterTypes.HARPEE_RIGHT().velocity);
+        harpee.body.setGravity(0);
+
+        this.__phaser.anims.create({
+            key: 'harpee_right',
+            frames: this.__phaser.anims.generateFrameNumbers('harpee_right', { start: 1, end: 15  }),
+            frameRate: 15,
+            repeat: -1
+        });
+
+        this.__harpeesRight.push(harpee);
     }
 
     checkCollisionLeft(array, index, monster) {
@@ -197,9 +225,27 @@ class Monsters {
         }
     }
 
+    updateMonsters (time) {
+        if (time - this.__timer >= 500) {
+            this.__timer = time;
+            this.generateMonsters();
+        }
+
+
+        this.moveHarpeeLeft();
+        this.moveMushroomLeft();
+
+        this.movePinkmanRight();
+        this.moveGreenPeasesRight();
+        this.moveHarpeeRight();
+    }
+
+    testFunction () {
+        console.log('testFunction');
+    }
+
     moveHarpeeLeft () {
         for (const [index, harpee] of this.__harpees.entries()) {
-            harpee.setVelocityX(-450);
             harpee.anims.play('harpee_left', true);
 
             this.checkCollisionLeft(this.__harpees, index, harpee);
@@ -208,7 +254,6 @@ class Monsters {
 
     moveMushroomLeft () {
         for (const [index, mushroom] of this.__mushrooms.entries()) {
-            mushroom.setVelocityX(-150);
             mushroom.anims.play('mushroom_left', true);
             
             this.checkCollisionLeft(this.__mushrooms, index, mushroom);
@@ -217,7 +262,6 @@ class Monsters {
 
     movePinkmanRight () {
         for (const [index, pinkman] of this.__pinkmans.entries()) {
-            pinkman.setVelocityX(120);
             pinkman.anims.play('pinkman_right', true);
 
             this.checkCollisionRight(this.__pinkmans, index, pinkman);
@@ -226,10 +270,17 @@ class Monsters {
 
     moveGreenPeasesRight () {
         for (const [index, greenPease] of this.__greenPeases.entries()) {
-            greenPease.setVelocityX(80);
             greenPease.anims.play('green_peas_right', true);
 
             this.checkCollisionRight(this.__greenPeases, index, greenPease);
+        }
+    }
+
+    moveHarpeeRight () {
+        for (const [index, harpee] of this.__harpeesRight.entries()) {
+            harpee.anims.play('harpee_right', true);
+
+            this.checkCollisionRight(this.__harpeesRight, index, harpee);
         }
     }
 }
