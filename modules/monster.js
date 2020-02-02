@@ -1,11 +1,16 @@
 class Monsters {
-    __harpees = [];
-    __mushrooms = [];
-    __pinkmans = [];
-    __greenPeases = [];
+    
+    constructor(game, phaser) {
+        this.__game = game;
+        this.__phaser = phaser;
 
-    constructor(phaserObj) {
-        this.__phaser = phaserObj;
+        this.__harpees = [];
+        this.__mushrooms = [];
+        this.__pinkmans = [];
+        this.__greenPeases = [];
+
+        this.__timer = 0;
+
         this.__phaser.load.spritesheet('harpee', '../assets/monster.png', { frameWidth: 130, frameHeight: 147 });
         this.__phaser.load.spritesheet('pinkman', '../assets/pinkman.png', { frameWidth: 110, frameHeight: 110 });
         this.__phaser.load.spritesheet('mushroom', '../assets/mushroom.png', { frameWidth: 115, frameHeight: 122 });
@@ -50,46 +55,44 @@ class Monsters {
         this.initPinkman(-350, 560);
         this.initPinkman(-550, 300);
         this.initPinkman(-150, 410);
-
-        this.generateMonsters();
     }
 
     generateMonsters () {
         const self = this;
-        
-        setInterval(() => {
-            const monsterTypeMax = MonsterTypes.MONSTER_TYPES().length;
-            const monsterType = Math.floor(Math.random() * Math.floor(monsterTypeMax));
 
-            const monster = MonsterTypes.MONSTER_TYPES()[monsterType];
-            const randomX = self.getRandomX(monster.direction);
-            const randomY = self.getRandomY();
+        const monsterTypeMax = MonsterTypes.MONSTER_TYPES().length;
+        const monsterType = Math.floor(Math.random() * Math.floor(monsterTypeMax));
 
-            if (randomY < 0) return;
+        const monster = MonsterTypes.MONSTER_TYPES()[monsterType];
+        const randomX = self.getRandomX(monster.direction);
+        const randomY = self.getRandomY();
 
-            switch (monster.type) {
-                case MonsterTypes.HARPEE():
-                    self.initHarpee(randomX, randomY);
-                    break;
-                case MonsterTypes.MUSHROOM():
-                    self.initMushroom(randomX, randomY);
-                    break;
-                case MonsterTypes.PINKMAN():
-                    self.initPinkman(randomX, randomY);
-                    break;
-                case MonsterTypes.GREEN_PEAS():
-                    self.initGreenPeas(randomX, randomY);
-                    break;
-                default:
-                    return;
-            }
-        }, 500);
+        if (randomY < 0) return;
+
+        console.log('GO GO GO', monster.type, '!!!!');
+
+        switch (monster.type) {
+            case MonsterTypes.HARPEE():
+                self.initHarpee(randomX, randomY);
+                break;
+            case MonsterTypes.MUSHROOM():
+                self.initMushroom(randomX, randomY);
+                break;
+            case MonsterTypes.PINKMAN():
+                self.initPinkman(randomX, randomY);
+                break;
+            case MonsterTypes.GREEN_PEAS():
+                self.initGreenPeas(randomX, randomY);
+                break;
+            default:
+                return;
+        }
     }
 
     getRandomX (direction) {
         if (direction === MonsterTypes.DIRECTION_LEFT()) {
             const min = 1400;
-            const max = 5000
+            const max = 2500
             return Math.floor(Math.random() * (max - min)) + min;
         } else {
             const min = 0;
@@ -195,6 +198,24 @@ class Monsters {
         if (monster.body.x > (1200 + monster.body.width)) {
             array.splice(index, 1);
         }
+    }
+
+    updateMonsters (time) {
+        if (time - this.__timer >= 500) {
+            this.__timer = time;
+            this.generateMonsters();
+        }
+
+
+        this.moveHarpeeLeft();
+        this.moveMushroomLeft();
+
+        this.movePinkmanRight();
+        this.moveGreenPeasesRight();
+    }
+
+    testFunction () {
+        console.log('testFunction');
     }
 
     moveHarpeeLeft () {
