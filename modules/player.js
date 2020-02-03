@@ -96,53 +96,53 @@ class Player {
     movePlayer () {
         const accel = 100;
         if (this.cursors.up.isDown && this.cursors.right.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(accel);
             this.player.setVelocityY(-accel);
             this.player.anims.play('q1', true);
             this.lastDirection = 'q1';
         }
         else if (this.cursors.down.isDown && this.cursors.right.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(accel);
             this.player.setVelocityY(accel);
             this.player.anims.play('q2', true);
             this.lastDirection = 'q2';
         }
         else if (this.cursors.down.isDown && this.cursors.left.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(-accel);
             this.player.setVelocityY(accel);
             this.player.anims.play('q3', true);
             this.lastDirection = 'q3';
         }
         else if (this.cursors.up.isDown && this.cursors.left.isDown){
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(-accel);
             this.player.setVelocityY(-accel);
             this.player.anims.play('q4', true);
             this.lastDirection = 'q4';
         }
         else if (this.cursors.left.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(-accel);
             this.player.anims.play('left', true);
             this.lastDirection = 'left';
         }
         else if (this.cursors.right.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityX(accel);
             this.player.anims.play('right', true);
             this.lastDirection = 'right';
         }
         else if (this.cursors.up.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityY(-accel);
             this.player.anims.play('up', true);
             this.lastDirection = 'up';
         }
         else if (this.cursors.down.isDown) {
-            this.__walkAudio.play();
+            !this.__walkAudio.isPlaying ? this.__walkAudio.play() : null;
             this.player.setVelocityY(accel);
             this.player.anims.play('down', true);
             this.lastDirection = 'down';

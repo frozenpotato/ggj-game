@@ -52,7 +52,7 @@ function create() {
         delay: 0,
         seek: 0,
         rate: 1,
-        volume: 1,
+        volume: 0.5,
         loop: true
     };
 
